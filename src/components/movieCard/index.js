@@ -14,9 +14,9 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png';
 import {Link} from "react-router-dom";
 import {Avatar} from "@mui/material";
-import {MoviesContext} from "../../contexsts/movieContext";
+import {MoviesContext} from "../../contexts/moviesContext";
 
-export default function MovieCard({movie}) {
+export default function MovieCard({ movie, action }) {
     const { favourites, addToFavourites } = useContext(MoviesContext);
 
     if (favourites.find((id) => id === movie.id)) {
@@ -69,16 +69,14 @@ export default function MovieCard({movie}) {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={handleAddToFavourite}>
-          <FavoriteIcon color="primary" fontSize="large" />
-        </IconButton>
-        <Link to={`/movies/${movie.id}`}>
-            <Button variant="outlined" size="medium" color="primary">
-                More Info ...
-            </Button>
-        </Link>
-      </CardActions>
+        <CardActions disableSpacing>
+            {action(movie)}
+            <Link to={`/movies/${movie.id}`}>
+                <Button variant="outlined" size="medium" color="primary">
+                    More Info ...
+                </Button>
+            </Link>
+        </CardActions>
     </Card>
   );
 }
