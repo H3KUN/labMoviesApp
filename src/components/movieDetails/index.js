@@ -9,6 +9,9 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
+import MovieList from "../movieList";
+import AddToFavouritesIcon from "../cardIcons/addToFavourites";
+import SimilarMovieList from "../similarMovieList";
 
 const root = {
     display: "flex",
@@ -71,6 +74,16 @@ const MovieDetails = ({movie}) => {
           </li>
         ))}
       </Paper>
+        <Paper
+            component="ul"
+            sx={root}
+        >
+            <li>
+                <Chip label="Similar Movies" sx={chip} color="primary" />
+            </li>
+            <SimilarMovieList action={(m) => {return <AddToFavouritesIcon movie={m} />}} movie={movie}></SimilarMovieList>
+
+        </Paper>
         <Fab
             color="secondary"
             variant="extended"

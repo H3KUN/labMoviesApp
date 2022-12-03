@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -7,17 +7,18 @@ import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {LoggedInContext} from "../../contexts/authContext";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = ({ history }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-
+    const isLoggedIn = useContext(LoggedInContext);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -27,8 +28,8 @@ const SiteHeader = ({ history }) => {
         { label: "Home", path: "/" },
         { label: "Upcoming", path: "/movies/upcoming" },
         { label: "Favourites", path: "/movies/favourites" },
-        { label: "Option 3", path: "/" },
-        { label: "Option 4", path: "/" },
+        { label: "Popular", path: "/movies/popular" },
+        { label: "Actors", path: "/actors" },
     ];
 
     const handleMenuSelect = (pageURL) => {
@@ -98,6 +99,17 @@ const SiteHeader = ({ history }) => {
                             ))}
                         </>
                     )}
+                    {isLoggedIn ?
+                        <>
+
+                        </>
+                        :
+                        <Link to={`/login`}>
+                            <Button variant="contained">
+                                Log In
+                            </Button>
+                        </Link>
+                    }
                 </Toolbar>
             </AppBar>
             <Offset />
