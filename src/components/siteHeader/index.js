@@ -11,7 +11,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import {LoggedInContext} from "../../contexts/authContext";
+import {AuthInfoContext, LoggedInContext} from "../../contexts/authContext";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -19,6 +19,7 @@ const SiteHeader = ({ history }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const isLoggedIn = useContext(LoggedInContext);
+    const [,setAuthInfo] = useContext(AuthInfoContext);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -100,9 +101,9 @@ const SiteHeader = ({ history }) => {
                         </>
                     )}
                     {isLoggedIn ?
-                        <>
-
-                        </>
+                        <Button variant="contained" onClick={()=>{setAuthInfo({username:null,password:null});}}>
+                            Log Out
+                        </Button>
                         :
                         <Link to={`/login`}>
                             <Button variant="contained">

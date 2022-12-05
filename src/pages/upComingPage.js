@@ -5,7 +5,7 @@ import {useQuery} from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 
-const UpcomingPage = (props) => {
+const UpcomingPage = () => {
     const {  data, error, isLoading, isError }  = useQuery("discover",getUpcoming)
 
     if (isLoading) {
@@ -20,7 +20,6 @@ const UpcomingPage = (props) => {
     // Redundant, but necessary to avoid app crashing.
     const favourites = movies.filter(m => m.favourite)
     localStorage.setItem('favourites', JSON.stringify(favourites))
-    const addToFavourites = (movieId) => true
 
     return (
         <PageTemplate

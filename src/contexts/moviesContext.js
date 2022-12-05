@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
+import {AuthInfoContext, LoggedInContext} from "./authContext";
+import {putUser} from "../api/userdb-api";
 
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
-    const [favourites, setFavourites] = useState( [] )
+    const [authInfo,setAuthInfo] = useContext(AuthInfoContext)
+    const isLoggedIn = useContext(LoggedInContext)
+    const [favourites, setFavourites] = useState([])
     const [myReviews, setMyReviews] = useState( {} )
 
 
     const addToFavourites = (movie) => {
-        let newFavourites = [...favourites];
+        let newFavourites = favourites;
         if (!favourites.includes(movie.id)) {
             newFavourites.push(movie.id);
+            setFavourites(newFavourites);
+            //setAuthInfo({...authInfo,favourites:{favourites}})
+            //console.log(res.response.msg)
         }
-        setFavourites(newFavourites);
+        else{
+
+        }
+
     };
 
     // We will use this function in a later section
@@ -20,6 +30,14 @@ const MoviesContextProvider = (props) => {
         setFavourites( favourites.filter(
             (mId) => mId !== movie.id
         ) )
+        //setAuthInfo({...authInfo,favourites:{favourites}})
+        const res=putUser(authInfo);
+        if(res.response.code ===401) {
+            let newFavourites = favourites;
+            newFavourites.push(movie.id);
+            setFavourites(newFavourites);
+            //setAuthInfo({...authInfo,favourites:{favourites}})
+        }
     };
 
     const addReview = (movie, review) => {

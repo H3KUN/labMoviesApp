@@ -13,9 +13,9 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import PopularPage from "./pages/mostPopularPage";
 import ActorPage from "./pages/actorPage";
-import * as PropTypes from "prop-types";
 import AuthContextProvider from "./contexts/authContext";
 import LogInPage from "./pages/logInPage";
+import InValidLogInPage from "./pages/inValidLoginPage";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -26,15 +26,13 @@ const queryClient = new QueryClient({
         },
     },
 });
-
 const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
-
+                <AuthContextProvider>
                 <MoviesContextProvider>
-                    <AuthContextProvider>
-                        <SiteHeader />
+                    <SiteHeader />
                         <Routes>
                             <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
                             <Route exact path="/movies/favourites" element={<FavouriteMoviesPage />} />
@@ -46,9 +44,10 @@ const App = () => {
                             <Route exact path="/actors" element={<ActorPage />} />
                             <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
                             <Route exact path="/login" element={<LogInPage/>} />
+                            <Route exact path="/try-again" element={<InValidLogInPage/>} />
                         </Routes>
-                    </AuthContextProvider>
                 </MoviesContextProvider>
+                </AuthContextProvider>
             </BrowserRouter>
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

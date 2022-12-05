@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddToFavouritesIcon from "../cardIcons/addToFavourites";
 
 const MovieHeader = (props) => {
   const movie = props.movie;
@@ -31,19 +32,11 @@ const MovieHeader = (props) => {
       <IconButton aria-label="go back">
         <ArrowBackIcon color="primary" fontSize="large" />
       </IconButton>
-        <IconButton aria-label="add to favorites" onClick={handleAddToFavourite}>
             {
-            movie.favourite ? (
-                <Avatar sx={{ backgroundColor: 'red' }}>
-                    <FavoriteIcon />
-                </Avatar>
-            ) : (
-                <Avatar sx={{ backgroundColor: 'white' }}>
-                    <FavoriteIcon />
-                </Avatar>
-            )
-        }
-        </IconButton>
+                movie.favourite ? (
+                    <AddToFavouritesIcon movie={movie}/>
+                ) : null
+            }
       <Typography variant="h4" component="h3">
         {movie.title}
         <a href={movie.homepage}>
